@@ -7,20 +7,22 @@
     super(props);
     this.state = {
       todos:[
-        { id:1, description: 'Walk the cat', isCompleted: true },
-        { id:2, description: 'Throw the dishes away', isCompleted: false },
-        { id:3, description: 'Buy new dishes', isCompleted: false }
+        {  description: 'Walk the cat', isCompleted: true },
+        {  description: 'Throw the dishes away', isCompleted: false },
+        {  description: 'Buy new dishes', isCompleted: false }
       ],
       newTodoDescription: ''
     };
-  }
-  
-  deleteTodo(id) {
-    this.setState(
-      (prevState) => ({ todos: prevState.todos.filter(item => item.id !== id)} )
-    )
-  }
 
+   }
+  
+ 
+  deleteTodo(index) {
+  const todos = this.state.todos.slice()
+  todos.splice(index, 1)
+  this.setState({todos:todos})
+}
+  
   handleChange(e) {
   this.setState({newTodoDescription: e.target.value})
   }
@@ -43,7 +45,7 @@
        <div className="App">
         <ul>
           { this.state.todos.map( (todo, index) => 
-              <ToDo key={ index } description ={todo.description} isCompleted={todo.isCompleted} toggleComplete={ () => this.toggleComplete(index)} onDelete={ () => this.deleteTodo(this.props.id)}  />
+              <ToDo key={ index } description ={todo.description} isCompleted={todo.isCompleted} toggleComplete={ () => this.toggleComplete(index)} onDelete={() => this.deleteTodo(index)}/>
           )}
         </ul>  
         <form onSubmit={ (e) => this.handleSubmit(e) }>
